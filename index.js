@@ -4,6 +4,11 @@ const app = express()
 
 const port = 3000
 
+//parse JSON using express
+
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+
 let movies = [
     {
         id: '1',
@@ -21,9 +26,17 @@ let movies = [
 
 //get the movie list in form of JSON
 
-app.get('/movies', (req, res) => {
+app.get('/movie', (req, res) => {
     res.json(movies)
 })
 
+//add movie to list
+
+app.post('/movie', (req, res) => {
+    const movie = req.body
+    console.log(movie)
+    movies.push(movie)
+    res.send('Movie is added to the list!')
+})
 //set the server to listen at port
 app.listen(port, () => console.log(`Server listening at port ${port}`))
